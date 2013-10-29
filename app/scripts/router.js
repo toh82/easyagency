@@ -1,8 +1,9 @@
 define([
   'jquery',
   'underscore',
-  'backbone'
-], function ($, _, Backbone) {
+  'backbone',
+  'vm'
+], function ($, _, Backbone, Vm) {
     
   var AppRouter = Backbone.Router.extend({
     initialize: function(options) {
@@ -37,6 +38,7 @@ define([
   var initialize = function(options){
     var router = new AppRouter(options);
  
+    router.register('test', 'TestPage', 'views/test');
     // Default route goes first
     //router.register('*actions', 'DashboardPage', 'views/dashboard/page');
     //router.register('optimize', 'OptimizePage', 'views/optimize/page');
