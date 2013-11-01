@@ -38,7 +38,6 @@ define([
   var initialize = function(options){
     var router = new AppRouter(options);
  
-    router.register('test', 'TestPage', 'views/test');
     // Default route goes first
     //router.register('*actions', 'DashboardPage', 'views/dashboard/page');
     //router.register('optimize', 'OptimizePage', 'views/optimize/page');
