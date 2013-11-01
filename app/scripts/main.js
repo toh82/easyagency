@@ -3,6 +3,7 @@ require.config({
         jquery: 'vendor/jquery-2.0.3.min',
         underscore: 'vendor/underscore-min',
         backbone: 'vendor/backbone-min',
+        database: 'vendor/database',
         templates: '../templates'
     }
 });
@@ -13,6 +14,8 @@ require([
     'vm'
 ], function(AppView, Router, Vm) {
     var appView = Vm.create({}, 'AppView', AppView);
+    
     appView.render();
+    
     Router.initialize({appView: appView}); 
 });

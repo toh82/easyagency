@@ -39,6 +39,7 @@ define([
     var router = new AppRouter(options);
  
     // Default route goes first
+    router.register('notes', 'NotesList', 'views/notes/list');
     //router.register('*actions', 'DashboardPage', 'views/dashboard/page');
     //router.register('optimize', 'OptimizePage', 'views/optimize/page');
     //router.register('modules', 'ModulesPage', 'views/modules/page');
