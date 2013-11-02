@@ -40,7 +40,7 @@ define([
  
     // Default route goes first
     //router.register('*actions', 'DashboardPage', 'views/dashboard/page');
-    //router.register('optimize', 'OptimizePage', 'views/optimize/page');
+    router.register('optimize', 'contacts', 'views/contacts/list');
     //router.register('modules', 'ModulesPage', 'views/modules/page');
     //router.register('backbone', 'BackbonePage', 'views/backbone/page');
     //router.register('backbone/:section', 'BackbonePage', 'views/backbone/page');
