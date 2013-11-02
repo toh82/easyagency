@@ -1,55 +1,18 @@
 define([
-  'jquery',
   'underscore',
-  'backbone',
-  'vm'
-], function ($, _, Backbone, Vm) {
+  'backbone'
+], function (_, Backbone) {
     
-  var AppRouter = Backbone.Router.extend({
-    initialize: function(options) {
-      this.appView = options.appView;
-    },
- 
-    register: function (route, name, path) {
-      var self = this;
- 
-      this.route(route, name, function () {
-        var args = arguments;
- 
-        require([path], function (module) {
-          var options = null;
-          var parameters = route.match(/[:\*]\w+/g);
- 
-          // Map the route parameters to options for the View.
-          if (parameters) {
-            options = {};
-            _.each(parameters, function(name, index) {
-              options[name.substring(1)] = args[index];
+    'use strict';
+         
+    var Router = Backbone.Router.extend({
+        loadModule: function (module) {
+            require([module], function (module) {
+                console.log('whats in the module',module);
+                module();
             });
-          }
+        }
+    });
  
-          var page = Vm.create(self.appView, name, module, options);
-          page.render();
-        });
-      });
-    }
-  });
- 
-  var initialize = function(options){
-    var router = new AppRouter(options);
- 
-    // Default route goes first
-    //router.register('*actions', 'DashboardPage', 'views/dashboard/page');
-    router.register('contactlist', 'contacts', 'views/contacts/list');
-    //router.register('modules', 'ModulesPage', 'views/modules/page');
-    //router.register('backbone', 'BackbonePage', 'views/backbone/page');
-    //router.register('backbone/:section', 'BackbonePage', 'views/backbone/page');
-    //router.register('manager', 'ManagerPage', 'views/manager/page');
- 
-    Backbone.history.start();
-  };
- 
-  return {
-    initialize: initialize
-  };
+    return new Router();      
 });

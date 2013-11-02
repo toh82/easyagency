@@ -2,10 +2,9 @@ define([
     'jquery',
     'backbone',
     'underscore',
-    'model/contacts',
     'text!templates/contacts/list.html'
-], function($, Backbone, _, ContactsModel, html) {
-    var list = Backbone.View.extend({
+], function($, Backbone, _, html) {
+    var ContactsListView = Backbone.View.extend({
         el: $("#body"),
         template: _.template(html),
         initialize: function() {                        
@@ -14,5 +13,5 @@ define([
         }
     });
 
-    return list;
+    return ContactsListView;
 });
