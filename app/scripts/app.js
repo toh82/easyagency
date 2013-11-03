@@ -14,7 +14,6 @@ define([
     });
 
     router.route("contacts", "contacts", function () {
-        console.log('woo... du solltest eigentlich jetzt was machen');
         this.loadModule("controller/contacts");
     });    
      

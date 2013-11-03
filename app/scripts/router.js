@@ -8,7 +8,6 @@ define([
     var Router = Backbone.Router.extend({
         loadModule: function (module) {
             require([module], function (module) {
-                console.log('whats in the module',module);
                 module();
             });
         }

@@ -9,6 +9,7 @@
             underscore: 'vendor/underscore-min',
             backbone: 'vendor/backbone-min',
             modo: 'vendor/modo-0.12-full',
+            uikit: 'vendor/uikit.min',
             templates: '../templates'
         },
         shim: {
@@ -23,7 +24,11 @@
             "modo": {
                 deps: ["jquery","backbone"],
                 exports: "modo"
-            }
+            },
+            "uikit": {
+                deps: ["jquery"],
+                exports: "uikit"
+            }            
         }
     });
 
