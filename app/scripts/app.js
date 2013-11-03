@@ -13,11 +13,13 @@ define([
         this.loadModule("controller/foo");
     });
 
-    router.route("contacts", "contacts", function () {
+    router.route("contacts", "Contacts", function () {
         this.loadModule("controller/contacts");
     });    
-     
-    
+
+    router.route('notes', 'Notes', function () {
+        this.loadModule("controller/notes");
+    });
     
     return {
         initialize: function () {

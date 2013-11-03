@@ -1,10 +1,17 @@
-define(['backbone', 'database'], function(Backbone, fuckyou) {
-console.log(fuckyou);
-    var App = Backbone.View.extend({
-        initialize: function() {
-            
+define([
+    'jquery',
+    'backbone',
+    'underscore',
+    'database'
+], function($, Backbone, _, database) {
+    
+
+    var notesView = Backbone.View.extend({
+        id: "notes-list",
+        initialize: function() {        
+            database.getAllDatabases();
         }
     });
 
-    return App;
+    return notesView;
 });

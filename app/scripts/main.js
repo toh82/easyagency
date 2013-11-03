@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 (function () {
  
     'use strict';
@@ -10,6 +9,7 @@
             underscore: 'vendor/underscore-min',
             backbone: 'vendor/backbone-min',
             modo: 'vendor/modo-0.12-full',
+            database: 'vendor/database',
             uikit: 'vendor/uikit.min',
             templates: '../templates'
         },
@@ -29,6 +29,10 @@
             "uikit": {
                 deps: ["jquery"],
                 exports: "uikit"
+            },            
+            "database": {
+                deps: ["jquery"],
+                exports: "database"
             }            
         }
     });
@@ -38,26 +42,3 @@
     });
     
 }());    
-=======
-require.config({
-    paths: {
-        jquery: 'vendor/jquery-2.0.3.min',
-        underscore: 'vendor/underscore-min',
-        backbone: 'vendor/backbone-min',
-        database: 'vendor/database',
-        templates: '../templates'
-    }
-});
-
-require([  
-    'views/app',
-    'router',
-    'vm'
-], function(AppView, Router, Vm) {
-    var appView = Vm.create({}, 'AppView', AppView);
-    
-    appView.render();
-    
-    Router.initialize({appView: appView}); 
-});
->>>>>>> origin/database

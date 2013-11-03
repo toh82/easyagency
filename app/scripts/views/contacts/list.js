@@ -4,6 +4,7 @@ define([
     'underscore',
     'text!templates/contacts/list.html'
 ], function($, Backbone, _, html) {
+    
     var ContactsListView = Backbone.View.extend({
         id: "contacts-list",
         template: _.template(html),
