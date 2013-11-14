@@ -6,7 +6,8 @@ define([
     'use strict';
     
     return function () {
-        console.log('notes controller loaded');    
+        console.log('notes controller loaded');
+        
         var notesListView = new NotesListView();
     };
  

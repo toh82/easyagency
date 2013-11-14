@@ -9,9 +9,9 @@
             underscore: 'vendor/underscore-min',
             backbone: 'vendor/backbone-min',
             modo: 'vendor/modo-0.12-full',
-            database: 'vendor/database',
             uikit: 'vendor/uikit.min',
-            templates: '../templates'
+            templates: '../templates',
+            database: 'vendor/database'
         },
         shim: {
             "underscore": {
@@ -29,7 +29,7 @@
             "uikit": {
                 deps: ["jquery"],
                 exports: "uikit"
-            },            
+            },                       
             "database": {
                 deps: ["jquery"],
                 exports: "database"
@@ -37,7 +37,7 @@
         }
     });
 
-    require(['app'], function(app) {
+    require(['app','database'], function(app) {
         app.initialize();
     });
     
