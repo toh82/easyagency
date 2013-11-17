@@ -6,13 +6,11 @@ define([
     var ContactsModel = Backbone.Model.extend({
         url : '',
         defaults : {
-            name: "Harry Potter",
-            address: "Hogwards Street 11",
-            mail: 'harry@hogwards.org'
+            name: "NA",
+            address: "NA",
+            mail: "NA"
         },  
-        initialize: function( options ) {
-            console.log('Model loaded', this)           
-        },
+        initialize: function( options ) {},
     });
     
     return ContactsModel;

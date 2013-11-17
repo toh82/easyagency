@@ -9,15 +9,15 @@ define([
         id: "contacts-list",
         template: _.template(html),
         initialize: function() {                        
-            console.log( 'this should be the user list in near future!' );
             this.render();
+            this.listenTo(this.collection, "add", this.render);
         },
-        render: function () {
+        render: function () {        
             this.$el.html(this.template({
-                contacts: [this.model.attributes]
+                contacts: this.collection.models
             }));  
             
-            $('#body').html(this.$el);
+            $('#body').append(this.$el);
         }
     });
 

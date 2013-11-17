@@ -1,5 +1,5 @@
 /**
-* Modo UI 0.12
+* Modo UI 0.13
 * ===========
 * (c) 2013 Christian Engel - wearekiss.com
 * All rights reserved.
@@ -12,20 +12,21 @@
 * Please contact us by mail at hello@wearekiss.com
 *
 * @dependencies: jQuery, underscore.js, backbone.js
-* @version: 0.12
+* @version: 0.13
 * @author: Christian Engel <hello@wearekiss.com>
 */
 (function (root){
     'use strict';
 
     var modo,
-        modoRollback;
+        modoRollback,
+        internals;
 
     modo = {};
 
     modoRollback = root.modo;
 
-    modo.VERSION = '0.12';
+    modo.VERSION = '0.13';
 
     /**
      * This is the CSS-Prefix, used by EVERY Modo element you create.
@@ -33,15 +34,9 @@
      */
     modo.cssPrefix = 'mdo-';
 
-    /**
-     * This is the root element, defined by the init() function.
-     * May be used by some Modo modules. If root_element == null, use the body tag.
-     * @type {null}
-     */
-    modo.rootElement = null;
-
-    root.internals = {
+    internals = {
         count: 0,
+        domRoot: null,
         /**
          * Will return a new and unique modo element id.
          */
@@ -55,34 +50,36 @@
     /**
      * Use this function to add basic CUI classes to your root app element.
      * Leave the element empty, to use the document body.
-     * @param {Object} rootElement The DOM-Node to be used as application container. Optional. If omitted, the BODY tag is used.
-     * @param {modo.*} attachElement Any Modo Element to be used as core element.
+     * @param {Object} domTarget The DOM-Node to be used as application container. Optional. If omitted, the BODY tag is used.
+     * @param {modo.*} rootElement Any Modo Element to be used as core element.
      */
-    modo.init = function (rootElement, attachElement){
+    modo.init = function (domTarget, rootElement){
         var $domRoot;
-        if(typeof rootElement === 'undefined'){
+
+        if(rootElement === undefined){
             $domRoot = $('body');
+            rootElement = domTarget;
         } else {
-            if(typeof rootElement.nodeName === 'undefined' && !(rootElement instanceof $)){
-                //No root element given - use the body tag.
-                $domRoot = $('body');
-                attachElement = rootElement;
+            if(domTarget instanceof $){
+                $domRoot = domTarget;
             } else {
-                $domRoot = $(rootElement);
+                $domRoot = $(domTarget);
             }
         }
 
         $domRoot.addClass(modo.cssPrefix + 'root');
-        modo.rootElement = $domRoot;
-        if(modo.isElement(attachElement)){
-            $domRoot.append(attachElement.el);
+        internals.domRoot = $domRoot;
+        if(modo.isElement(rootElement)){
+            $domRoot.append(rootElement.el);
+        } else {
+            throw new Error('Root element no modo element');
         }
         modo.trigger('init');
         return this;
     };
 
     /**
-     * This method defines a new modo element on the modo library.
+     * This method defines a new modo element on the modoJS library.
      * @param {String} name
      * @param {Array} classNames
      * @param {Function} Constructor
@@ -102,7 +99,7 @@
              * This method inherits the prototype object of another modo element.
              * @param {String} targetName
              * @param {String} sourceName
-             * @return modo;
+             * @return this;
              */
             inheritPrototype: function (){
                 var key,
@@ -118,18 +115,27 @@
 
                 return this;
             },
+            /**
+             * Extend the elements prototype with custom methods.
+             * @param ext
+             * @returns {defineElement}
+             */
             extendPrototype: function (ext){
                 _.extend(Constructor.prototype, ext);
+                return this;
             }
         };
     };
 
+    /**
+     * Unsetting the global modoJS object to avoid namespace collisions.
+     */
     modo.noConflict = function (){
         root.modo = modoRollback;
     };
 
     /**
-     * Checks if the passed element if a Modo element.
+     * Checks if the passed element is a modoJS element.
      * @param {Object} element
      * @return {Boolean}
      */
@@ -137,11 +143,11 @@
         if(typeof element !== 'object'){
             return false;
         }
-        return (typeof element.modoId !== 'undefined' && element.el !== 'undefined');
+        return (element.modoId !== undefined && element.el !== undefined);
     };
 
     /**
-     * Checks if the passed element is a get/set enabled Modo element.
+     * Checks if the passed element is a get/set enabled modoJS element.
      * @param element
      * @return {Boolean}
      */
@@ -149,7 +155,7 @@
         if(!this.isElement(element)){
             return false;
         }
-        return (typeof this.get !== 'function' || typeof this.set !== 'function');
+        return (typeof element.get === 'function' && typeof element.set === 'function');
     };
 
     /**
@@ -161,15 +167,15 @@
         if(typeof element === 'undefined'){
             return false;
         }
-        return ((typeof element.nodeName !== 'undefined') || (element instanceof jQuery));
+        return ((element.nodeName !== undefined) || (element instanceof $));
     };
 
     /**
      * Returns the root DOM Element, defined in modo.init().
      */
     modo.getRootElement = function (){
-        if(modo.rootElement){
-            return modo.rootElement;
+        if(internals.domRoot){
+            return internals.domRoot;
         }
         return $('body');
     };
@@ -182,19 +188,45 @@
      * Make sure to remove all previously created modo elements to avoid ID collisions!
      */
     modo.reset = function (){
-        root.internals.count = 0;
-        modo.rootElement = null;
+        internals.count = 0;
+        internals.domRoot = null;
         modo.cssPrefix = 'mdo-';
     };
 
     /**
+     * Used by modo.generate().
+     * Copies the reference keys over, from nested generate() calls.
+     * @param source
+     * @param refs
+     */
+    function copyRefs(source, refs){
+        var key;
+
+        for (key in source) {
+            if(typeof refs[key] !== 'undefined'){
+                throw new Error('Duplicated reference key "' + key + '"');
+            }
+            refs[key] = source[key];
+        }
+    }
+
+    /**
+     * Used by modo.generate().
+     * Used to filter out all non-addable objects before applying an add() to containers.
+     * @param o
+     * @returns {boolean}
+     */
+    function filterFunction(o){
+        return (typeof o.noAdd === 'undefined');
+    }
+
+    /**
      * This will generate a tree of nested Modo elements.
      * Use it to create complex, nested User Interfaces with one function call.
-     * @param {Array} struct Your UI structure
+     * @param {Array|Object} struct Your UI definition structure.
      * @return {Object} A object with the Modo elements, you wanted references to.
      */
     modo.generate = function (){
-
         var struct = arguments[0],
             subcall = arguments[1],
             generated = [],
@@ -212,21 +244,6 @@
         if(!(struct instanceof Array)){
             struct = [struct];
             singleObj = true;
-        }
-
-        function copyRefs(source){
-            var key;
-
-            for (key in source) {
-                if(typeof refs[key] !== 'undefined'){
-                    throw new Error('Duplicated reference key "' + key + '"');
-                }
-                refs[key] = source[key];
-            }
-        }
-
-        function filterFunction(o){
-            return (typeof o.noAdd === 'undefined');
         }
 
         for (i = 0; i < struct.length; i++) {
@@ -263,6 +280,7 @@
             mobj = new modo[o.type](o.params);
             generated.push(mobj);
 
+            //Reference flag - user wants a reference to that element.
             if(o.ref !== undefined){
                 if(refs[o.ref] !== undefined){
                     throw new Error('Duplicated reference key "' + o.ref + '"');
@@ -270,10 +288,35 @@
                 refs[o.ref] = mobj;
             }
 
+            //Flexible flag - has only effect inside a FlexContainer.
             if(o.flexible){
                 mobj.setFlexible();
             }
 
+            //Event flag - automatically attach some events.
+            if(o.on){
+                for (j in o.on) {
+                    if(o.on.hasOwnProperty(j)){
+                        mobj.on(j, o.on[j]);
+                    }
+                }
+            }
+
+            //One-Time Event flag - automatically attach events that are only responded to, once.
+            if(o.once){
+                for (j in o.once) {
+                    if(o.once.hasOwnProperty(j)){
+                        mobj.once(j, o.once[j]);
+                    }
+                }
+            }
+
+            //Hidden flag - for making objects invisible upon creation.
+            if(o.hidden){
+                mobj.hide();
+            }
+
+            //Attach children to a container element.
             if(o.children instanceof Array && o.children.length){
                 if(typeof mobj.add !== 'function'){
                     throw new Error('Element of type "' + o.type + '" doesn\'t support the addition of children');
@@ -298,9 +341,11 @@
                     result[0].push(opt);
                     mobj.add.apply(mobj, _.filter(result[0], filterFunction));
                 }
-                copyRefs(result[1]);
+                copyRefs(result[1], refs);
             }
 
+            //Like the above block, but children are defined in a {key:value} format
+            //Thats an easier definition for some container types that require keyed children.
             if(o.children instanceof Object && !(o.children instanceof Array)){
                 if(typeof mobj.add !== 'function'){
                     throw new Error('Element of type "' + o.type + '" doesn\'t support the addition of children');
@@ -325,7 +370,7 @@
                     struct[keyed[j]] = result[0][j];
                     mobj.add.call(mobj, struct, opt);
                 }
-                copyRefs(result[1]);
+                copyRefs(result[1], refs);
             }
         }
 
@@ -363,7 +408,7 @@
 
         this.el.addClass(modo.cssPrefix + modo.Element.classNames[0]);
 
-        this.modoId = root.internals.getId();
+        this.modoId = internals.getId();
 
         this.visible = true;
 
@@ -938,9 +983,6 @@
         this.addClass(modoCore.InputText.classNames[1] + settings.type);
 
         that = this;
-        if(params.model){
-            this.bindToModel(params.model, params.modelKey, (typeof params.value === 'function') ? params.value : null, true);
-        }
 
         keymap = {
             13: 'enter',
@@ -1050,7 +1092,7 @@
             if(!modelKey){
                 if(typeof processingFunction === 'function'){
                     this.listenTo(model, 'change', function (){
-                        that.set(processingFunction(model));
+                        that.set(processingFunction.call(that, model));
                     });
                     settings.value = processingFunction(params.model);
                 } else {
@@ -1068,6 +1110,10 @@
                 this.set(settings.value);
             }
         };
+
+        if(params.model){
+            this.bindToModel(params.model, params.modelKey, (typeof params.value === 'function') ? params.value : null, true);
+        }
 
         if(params.disabled){
             this.disable();
@@ -1204,7 +1250,7 @@
             if(!params.modelKey){
                 if(typeof params.value === 'function'){
                     params.model.on('change', function (){
-                        that.set(params.value(params.model));
+                        that.set(params.value.call(that, params.model));
                     });
                 } else {
                     throw new Error('Trying to bind to model, but no modelKey and no valueFunction given');
@@ -1513,6 +1559,11 @@
                         clickedIndex,
                         index = 0,
                         data;
+
+                    //Don't capture events on empty list placeholders.
+                    if($this.hasClass(modoCore.cssPrefix + modoCore.List.classNames[2])){
+                        return;
+                    }
 
                     if($this.hasClass(listItemClass)){
                         listElement = $this;
@@ -2959,7 +3010,7 @@
             if(!settings.modelKey){
                 if(typeof params.value === 'function'){
                     params.model.on('change', function (){
-                        that.set(params.value(params.model));
+                        that.set(params.value.call(that, params.model));
                     });
                 } else {
                     throw new Error('Trying to bind to model, but no modelKey and no valueFunction given');
@@ -5407,6 +5458,8 @@
 
         if(params.data){
             this.set(params.data);
+        } else {
+        render(this.el, params.template, {});
         }
 
         //TODO: Clean that shit up.
@@ -5743,7 +5796,7 @@
             if(!params.modelKey){
                 if(typeof params.value1 === 'function'){
                     params.model.on('change', function (){
-                        that.set(params.value1(params.model));
+                        that.set(params.value1.call(that, params.model));
                     });
                 } else {
                     throw new Error('Trying to bind to model, but no modelKey and no valueFunction given');
@@ -5760,7 +5813,7 @@
                 if(!params.modelKey2){
                     if(typeof params.value2 === 'function'){
                         params.model.on('change', function (){
-                            that.set(params.value2(params.model));
+                            that.set(params.value2.call(that, params.model));
                         });
                     } else {
                         throw new Error('Trying to bind to model, but no modelKey and no valueFunction given');

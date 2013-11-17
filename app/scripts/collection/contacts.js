@@ -1,7 +1,6 @@
 define([
     'underscore',
     'backbone',
-    // Pull in the Model module from above
     'model/contacts'
 ], function(_, Backbone, ContactsModel){
     

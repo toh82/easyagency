@@ -9,9 +9,9 @@
     <tbody>        
         <% _.each( contacts, function( contact ){ %>
         <tr>
-            <td><%= contact.name %></td>
-            <td><%= contact.address %></td>
-            <td><%= contact.mail %></td>
+            <td><%= contact.get('name') %></td>
+            <td><%= contact.get('address') %></td>
+            <td><%= contact.get('mail') %></td>
         </tr>            
         <% });  %>
     </tbody>
