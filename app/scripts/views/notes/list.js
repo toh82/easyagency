@@ -1,15 +1,14 @@
 define([
     'jquery',
     'backbone',
-    'underscore',
-    'database'
-], function($, Backbone, _, database) {
+    'underscore'
+], function($, Backbone, _) {
     
 
     var notesView = Backbone.View.extend({
         id: "notes-list",
         initialize: function() {        
-            database.getAllDatabases();
+			
         }
     });
 
