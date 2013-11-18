@@ -8,12 +8,8 @@
             jquery: 'vendor/jquery-2.0.3.min',
             underscore: 'vendor/underscore-min',
             backbone: 'vendor/backbone-min',
-<<<<<<< HEAD
             modo: 'vendor/modo-0.13-full',
             database: 'vendor/database',
-=======
-            modo: 'vendor/modo-0.12-full',
->>>>>>> origin/database
             uikit: 'vendor/uikit.min',
             templates: '../templates',
             database: 'vendor/database'
