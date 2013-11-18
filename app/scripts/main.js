@@ -9,7 +9,6 @@
             underscore: 'vendor/underscore-min',
             backbone: 'vendor/backbone-min',
             modo: 'vendor/modo-0.13-full',
-            database: 'vendor/database',
             uikit: 'vendor/uikit.min',
             templates: '../templates',
             database: 'vendor/database'
