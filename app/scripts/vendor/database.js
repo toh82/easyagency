@@ -58,7 +58,7 @@
   var uuidCache = [];
 
   	$.extend($.couch, {
-    urlPrefix: '',
+    urlPrefix: '/couch',
 
     /**
      * You can obtain a list of active tasks by using the /_active_tasks URL.
@@ -995,7 +995,7 @@
     errorMessage = errorMessage || "Unknown error";
     timeStart = (new Date()).getTime();
     $.ajax($.extend($.extend({
-      type: "GET", dataType: "json", cache : !$.browser.msie,
+      type: "GET", dataType: "json", cache: true,
       beforeSend: function(xhr){
         if(ajaxOptions && ajaxOptions.headers){
           for (var header in ajaxOptions.headers){

@@ -11,14 +11,10 @@ define([
         // NOTE === Load app view for main html structure
         var appView = new AppView();
         
-        // NOTE === Initiate contacts collection and add test data
+        // NOTE === Initiate contacts collection
         var contactsCollection = new ContactsCollection();
-        contactsCollection.add([{
-            name: "Tobias Hartmann",
-            address: "Castellring 103",
-            mail: 'tobhart@foo.de'          
-        }]);   
-        
+        contactsCollection.fetch();
+
         // NOTE === Build the new user form with modo
         newuserView.collection = contactsCollection;
         modo.init($('#body'), newuserView.root);  
