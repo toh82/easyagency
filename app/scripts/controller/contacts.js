@@ -6,6 +6,8 @@ define([
 ], function (AppView, ContactlistView, newuserView, ContactsCollection) {
  
     'use strict';
+    Backbone.couch.databaseName = "contacts";   
+    Backbone.couch.ddocName = "all";
     
     return function () {
         // NOTE === Load app view for main html structure
@@ -17,6 +19,7 @@ define([
 
         // NOTE === Build the new user form with modo
         newuserView.collection = contactsCollection;
+        
         modo.init($('#body'), newuserView.root);  
         
         // NOTE === Build contacts list 

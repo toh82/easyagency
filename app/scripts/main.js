@@ -11,7 +11,8 @@
             modo: 'vendor/modo-0.13-full',
             uikit: 'vendor/uikit.min',
             templates: '../templates',
-            database: 'vendor/database'
+            couchdb: 'vendor/backbone.couch',
+            couchjs: 'vendor/couch'
         },
         shim: {
             "underscore": {
@@ -29,22 +30,20 @@
             "uikit": {
                 deps: ["jquery"],
                 exports: "uikit"
-            },                       
-            "database": {
+            },                                 
+            "couchdb": {
+                deps: ["backbone","couchjs"],
+                exports: "couchdb"            
+            },
+            "couchjs":{
                 deps: ["jquery"],
-                exports: "database"
-            }            
+                exports: "couchjs"            
+            }
         }
     });
 
-    require(['app','database'], function(app) {
-        app.initialize();
-
-        $.couch.info({
-            success: function(data) {
-                console.log(data);
-            }
-        });
+    require(['app','couchdb'], function(app) {        
+        app.initialize();        
     });
     
 }());    

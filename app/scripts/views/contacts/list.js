@@ -10,7 +10,7 @@ define([
         template: _.template(html),
         initialize: function() {                        
             this.render();
-            this.listenTo(this.collection, "add", this.render);
+            //this.listenTo(this.collection, "add", this.render);
         },
         render: function () {        
             this.$el.html(this.template({
