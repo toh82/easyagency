@@ -1,0 +1,953 @@
+{
+  "id": "9db8ded9",
+  "cfgVersion": 1,
+  "name": "easyagency",
+  "files": {
+    "82174271": {
+      "id": "82174271",
+      "pid": "9db8ded9",
+      "name": "normalize.scss",
+      "input": "app\\scss\\normalize.scss",
+      "customOutput": false,
+      "type": "Scss",
+      "config": {
+        "autoCompile": true,
+        "lineNumbers": false,
+        "unixNewlines": false,
+        "debug": false,
+        "compass": false,
+        "fullCompass": false,
+        "compassConfigRb": false,
+        "outputStyle": "expanded",
+        "autoprefixer": false,
+        "sourcemaps": false
+      }
+    },
+    "96726105": {
+      "id": "96726105",
+      "pid": "9db8ded9",
+      "name": "base.js",
+      "input": "app\\scripts\\model\\base.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "1a119f65": {
+      "id": "1a119f65",
+      "pid": "9db8ded9",
+      "name": "app.js",
+      "input": "app\\scripts\\app.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "63b9e1a7": {
+      "id": "63b9e1a7",
+      "pid": "9db8ded9",
+      "name": "contacts.js",
+      "input": "app\\scripts\\collection\\contacts.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "c6f5ec34": {
+      "id": "c6f5ec34",
+      "pid": "9db8ded9",
+      "name": "contacts.js",
+      "input": "app\\scripts\\controller\\contacts.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "44b98f32": {
+      "id": "44b98f32",
+      "pid": "9db8ded9",
+      "name": "notes.js",
+      "input": "app\\scripts\\controller\\notes.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "86faa327": {
+      "id": "86faa327",
+      "pid": "9db8ded9",
+      "name": "main.js",
+      "input": "app\\scripts\\main.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "14c13c76": {
+      "id": "14c13c76",
+      "pid": "9db8ded9",
+      "name": "contacts.js",
+      "input": "app\\scripts\\model\\contacts.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "94b3a1ef": {
+      "id": "94b3a1ef",
+      "pid": "9db8ded9",
+      "name": "router.js",
+      "input": "app\\scripts\\router.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "158c9c2f": {
+      "id": "158c9c2f",
+      "pid": "9db8ded9",
+      "name": "text.js",
+      "input": "app\\scripts\\text.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "4244bee1": {
+      "id": "4244bee1",
+      "pid": "9db8ded9",
+      "name": "backbone.couch.js",
+      "input": "app\\scripts\\vendor\\backbone.couch.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "6717e21b": {
+      "id": "6717e21b",
+      "pid": "9db8ded9",
+      "name": "modo-0.13-full.js",
+      "input": "app\\scripts\\vendor\\modo-0.13-full.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "fcc7b251": {
+      "id": "fcc7b251",
+      "pid": "9db8ded9",
+      "name": "require.js",
+      "input": "app\\scripts\\vendor\\require.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "06538988": {
+      "id": "06538988",
+      "pid": "9db8ded9",
+      "name": "app.js",
+      "input": "app\\scripts\\views\\app.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "62e7516c": {
+      "id": "62e7516c",
+      "pid": "9db8ded9",
+      "name": "list.js",
+      "input": "app\\scripts\\views\\contacts\\list.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "11d4fbc9": {
+      "id": "11d4fbc9",
+      "pid": "9db8ded9",
+      "name": "newuser.js",
+      "input": "app\\scripts\\views\\contacts\\newuser.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "27d5d651": {
+      "id": "27d5d651",
+      "pid": "9db8ded9",
+      "name": "example_view.js",
+      "input": "app\\scripts\\views\\example_view.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "b652613a": {
+      "id": "b652613a",
+      "pid": "9db8ded9",
+      "name": "list.js",
+      "input": "app\\scripts\\views\\notes\\list.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "9950a4b4": {
+      "id": "9950a4b4",
+      "pid": "9db8ded9",
+      "name": "couch.js",
+      "input": "app\\scripts\\vendor\\couch.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "6774dee6": {
+      "id": "6774dee6",
+      "pid": "9db8ded9",
+      "name": "fastclick.js",
+      "input": "app\\scripts\\vendor\\fastclick.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "3908ddf7": {
+      "id": "3908ddf7",
+      "pid": "9db8ded9",
+      "name": "foundation.abide.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.abide.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "e303cb7e": {
+      "id": "e303cb7e",
+      "pid": "9db8ded9",
+      "name": "foundation.accordion.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.accordion.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "72e855d8": {
+      "id": "72e855d8",
+      "pid": "9db8ded9",
+      "name": "foundation.alert.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.alert.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "06aa90de": {
+      "id": "06aa90de",
+      "pid": "9db8ded9",
+      "name": "foundation.clearing.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.clearing.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "4ea3d4c5": {
+      "id": "4ea3d4c5",
+      "pid": "9db8ded9",
+      "name": "foundation.dropdown.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.dropdown.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "bf18629c": {
+      "id": "bf18629c",
+      "pid": "9db8ded9",
+      "name": "foundation.interchange.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.interchange.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "6a002505": {
+      "id": "6a002505",
+      "pid": "9db8ded9",
+      "name": "foundation.joyride.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.joyride.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "7fcac449": {
+      "id": "7fcac449",
+      "pid": "9db8ded9",
+      "name": "foundation.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "1ee61d55": {
+      "id": "1ee61d55",
+      "pid": "9db8ded9",
+      "name": "foundation.magellan.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.magellan.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "d6f0f5ea": {
+      "id": "d6f0f5ea",
+      "pid": "9db8ded9",
+      "name": "foundation.offcanvas.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.offcanvas.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "c60c1838": {
+      "id": "c60c1838",
+      "pid": "9db8ded9",
+      "name": "foundation.orbit.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.orbit.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "08032cf9": {
+      "id": "08032cf9",
+      "pid": "9db8ded9",
+      "name": "foundation.reveal.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.reveal.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "9f5692a1": {
+      "id": "9f5692a1",
+      "pid": "9db8ded9",
+      "name": "foundation.tab.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.tab.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "f445499d": {
+      "id": "f445499d",
+      "pid": "9db8ded9",
+      "name": "foundation.tooltip.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.tooltip.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "0e000851": {
+      "id": "0e000851",
+      "pid": "9db8ded9",
+      "name": "foundation.topbar.js",
+      "input": "app\\scripts\\vendor\\foundation\\foundation.topbar.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "27bff482": {
+      "id": "27bff482",
+      "pid": "9db8ded9",
+      "name": "foundation.js",
+      "input": "app\\scripts\\vendor\\foundation.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "e56e7b12": {
+      "id": "e56e7b12",
+      "pid": "9db8ded9",
+      "name": "jquery.cookie.js",
+      "input": "app\\scripts\\vendor\\jquery.cookie.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "04c69a07": {
+      "id": "04c69a07",
+      "pid": "9db8ded9",
+      "name": "placeholder.js",
+      "input": "app\\scripts\\vendor\\placeholder.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "4190dee7": {
+      "id": "4190dee7",
+      "pid": "9db8ded9",
+      "name": "foundation.scss",
+      "input": "app\\scss\\foundation.scss",
+      "customOutput": false,
+      "type": "Scss",
+      "config": {
+        "autoCompile": true,
+        "lineNumbers": false,
+        "unixNewlines": false,
+        "debug": false,
+        "compass": false,
+        "fullCompass": false,
+        "compassConfigRb": false,
+        "outputStyle": "expanded",
+        "autoprefixer": false,
+        "sourcemaps": false
+      }
+    },
+    "571eb436": {
+      "id": "571eb436",
+      "pid": "9db8ded9",
+      "name": "notes - Kopie.js",
+      "input": "app\\scripts\\controller\\notes - Kopie.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "4c6deec6": {
+      "id": "4c6deec6",
+      "pid": "9db8ded9",
+      "name": "home.js",
+      "input": "app\\scripts\\controller\\home.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "d550fbb9": {
+      "id": "d550fbb9",
+      "pid": "9db8ded9",
+      "name": "contacts - Kopie.js",
+      "input": "app\\scripts\\model\\contacts - Kopie.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    },
+    "f9c95646": {
+      "id": "f9c95646",
+      "pid": "9db8ded9",
+      "name": "navigation.js",
+      "input": "app\\scripts\\model\\navigation.js",
+      "customOutput": false,
+      "type": "Js",
+      "config": {
+        "autoCompile": false,
+        "uglify": false,
+        "mangle": true,
+        "sourcemaps": false
+      }
+    }
+  },
+  "imports": {
+    "ee422a36": {
+      "id": "ee422a36",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_accordion.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "a1b10387": {
+      "id": "a1b10387",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_global.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "ea25ee9a": {
+      "id": "ea25ee9a",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\_functions.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "aba61ae2": {
+      "id": "aba61ae2",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_grid.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "1e568a45": {
+      "id": "1e568a45",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_alert-boxes.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "668cfc6b": {
+      "id": "668cfc6b",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_block-grid.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "0a4a8ec3": {
+      "id": "0a4a8ec3",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_breadcrumbs.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "4245e14a": {
+      "id": "4245e14a",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_button-groups.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "a73cea7a": {
+      "id": "a73cea7a",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_buttons.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "e9a024fb": {
+      "id": "e9a024fb",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_clearing.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "f1da7fc6": {
+      "id": "f1da7fc6",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_dropdown.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "b07bd0f9": {
+      "id": "b07bd0f9",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_dropdown-buttons.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "ebde5671": {
+      "id": "ebde5671",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_flex-video.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "c196e0e7": {
+      "id": "c196e0e7",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_forms.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "e6c2881a": {
+      "id": "e6c2881a",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_inline-lists.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "9bb39e23": {
+      "id": "9bb39e23",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_joyride.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "45be0648": {
+      "id": "45be0648",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_keystrokes.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "d5a02c3c": {
+      "id": "d5a02c3c",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_labels.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "a6d1f311": {
+      "id": "a6d1f311",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_magellan.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "424e504c": {
+      "id": "424e504c",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_orbit.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "e5d4a35b": {
+      "id": "e5d4a35b",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_pagination.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "70d6c964": {
+      "id": "70d6c964",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_panels.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "31ed40ab": {
+      "id": "31ed40ab",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_pricing-tables.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "a222ed39": {
+      "id": "a222ed39",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_progress-bars.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "c0dfe202": {
+      "id": "c0dfe202",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_reveal.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "9fb9bf7a": {
+      "id": "9fb9bf7a",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_side-nav.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "2d30559f": {
+      "id": "2d30559f",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_split-buttons.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "fb0e0124": {
+      "id": "fb0e0124",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_sub-nav.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "254616e4": {
+      "id": "254616e4",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_switch.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "38e2fc42": {
+      "id": "38e2fc42",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_tables.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "1f2b2542": {
+      "id": "1f2b2542",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_tabs.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "f073a585": {
+      "id": "f073a585",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_thumbs.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "fd4fcf00": {
+      "id": "fd4fcf00",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_tooltips.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "fcb0ffa0": {
+      "id": "fcb0ffa0",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_top-bar.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "e09bf189": {
+      "id": "e09bf189",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_type.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "7d9b6285": {
+      "id": "7d9b6285",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_offcanvas.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    },
+    "2da0c6b1": {
+      "id": "2da0c6b1",
+      "pid": "9db8ded9",
+      "path": "app\\scss\\foundation\\components\\_visibility.scss",
+      "parents": [
+        "4190dee7"
+      ]
+    }
+  },
+  "images": {},
+  "config": {
+    "watch": true,
+    "liveRefresh": true,
+    "liveRefreshDelay": 0,
+    "filterPatterns": "md,min",
+    "useCustomServer": false,
+    "customServerUrl": "",
+    "cssPath": "css",
+    "jsPath": "js",
+    "htmlPath": "",
+    "minJsPath": "min/",
+    "htmlExtension": ".html",
+    "cssPathType": "REPLACE_TYPE",
+    "htmlPathType": "REPLACE_TYPE",
+    "jsPathType": "REPLACE_TYPE",
+    "minJsPathType": "RELATIVE_FILEDIR",
+    "htmlTypes": "jade, haml, slim, markdown, md",
+    "cssTypes": "less, sass, stylus, scss, styl",
+    "jsTypes": "coffee, coffeescript, coffeescripts, ls, livescript, livescripts",
+    "cssPreprocessorPath": "",
+    "htmlPreprocessorPath": "",
+    "jsPreprocessorPath": "",
+    "minJsPreprocessorPath": "",
+    "autoprefixerBrowsers": "",
+    "ftpHost": "",
+    "ftpPort": "21",
+    "ftpRemotePath": "",
+    "ftpIgnorePreprocessorFiles": true,
+    "ftpType": "FTP",
+    "ftpExcludePatterns": "",
+    "ftpPassword": "",
+    "ftpUsername": ""
+  }
+}

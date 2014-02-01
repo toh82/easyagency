@@ -14,17 +14,6 @@ define([
                 user.save();
             });
         }
-        /*sync: function (method, collection) {
-            console.log(method, collection);
-
-            if(method == 'read'){
-                $.couch.db("contacts").allDocs({
-                    success: function(data) {
-                        console.log(data);
-                    }
-                });
-            }
-        }*/
     });
     
     return ContactCollection;

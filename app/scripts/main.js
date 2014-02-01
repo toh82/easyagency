@@ -9,7 +9,7 @@
             underscore: 'vendor/underscore-min',
             backbone: 'vendor/backbone-min',
             modo: 'vendor/modo-0.13-full',
-            uikit: 'vendor/uikit.min',
+            foundation: 'vendor/foundation.min',
             templates: '../templates',
             couchdb: 'vendor/backbone.couch',
             couchjs: 'vendor/couch'
@@ -27,9 +27,9 @@
                 deps: ["jquery","backbone"],
                 exports: "modo"
             },
-            "uikit": {
+            "foundation": {
                 deps: ["jquery"],
-                exports: "uikit"
+                exports: "foundation"
             },                                 
             "couchdb": {
                 deps: ["backbone","couchjs"],

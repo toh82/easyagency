@@ -1,18 +1,16 @@
 define([
+    "model/base",
     "views/app",
     "views/contacts/list",
     "views/contacts/newuser",
     "collection/contacts"
-], function (AppView, ContactlistView, newuserView, ContactsCollection) {
+], function (BaseModel ,AppView, ContactlistView, newuserView, ContactsCollection) {
  
     'use strict';
     Backbone.couch.databaseName = "contacts";   
     Backbone.couch.ddocName = "all";
     
-    return function () {
-        // NOTE === Load app view for main html structure
-        var appView = new AppView();
-        
+    return function () {               
         // NOTE === Initiate contacts collection
         var contactsCollection = new ContactsCollection();
         contactsCollection.fetch();

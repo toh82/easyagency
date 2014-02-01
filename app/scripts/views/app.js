@@ -8,12 +8,13 @@ define([
     var appView = Backbone.View.extend({
         id: 'appwrapper',
         template: _.template(html),
-        initialize: function() {                        
-            console.log( 'hey there this is the main app view' );            
+        initialize: function(model) {  
+        console.log(model);                                          
+            this.model = model;            
             this.render();
         },
-        render: function () {
-            this.$el.html(this.template());            
+        render: function () {                
+            this.$el.html(this.template(this.model.toJSON()));            
             $('body').append(this.$el);
         }
     });

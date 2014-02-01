@@ -10,7 +10,7 @@ define([
     console.log('Application started');
     
     router.route("/*", "home", function () {
-        this.loadModule("controller/foo");
+        this.loadModule("controller/home");
     });
 
     router.route("contacts", "Contacts", function () {
