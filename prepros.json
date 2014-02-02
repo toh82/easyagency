@@ -561,53 +561,11 @@
         "sourcemaps": false
       }
     },
-    "571eb436": {
-      "id": "571eb436",
-      "pid": "9db8ded9",
-      "name": "notes - Kopie.js",
-      "input": "app\\scripts\\controller\\notes - Kopie.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": false,
-        "uglify": false,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
     "4c6deec6": {
       "id": "4c6deec6",
       "pid": "9db8ded9",
       "name": "home.js",
       "input": "app\\scripts\\controller\\home.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": false,
-        "uglify": false,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "d550fbb9": {
-      "id": "d550fbb9",
-      "pid": "9db8ded9",
-      "name": "contacts - Kopie.js",
-      "input": "app\\scripts\\model\\contacts - Kopie.js",
-      "customOutput": false,
-      "type": "Js",
-      "config": {
-        "autoCompile": false,
-        "uglify": false,
-        "mangle": true,
-        "sourcemaps": false
-      }
-    },
-    "f9c95646": {
-      "id": "f9c95646",
-      "pid": "9db8ded9",
-      "name": "navigation.js",
-      "input": "app\\scripts\\model\\navigation.js",
       "customOutput": false,
       "type": "Js",
       "config": {

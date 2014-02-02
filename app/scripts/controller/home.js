@@ -1,12 +1,10 @@
-define([
-	"model/base",
-    "views/app"    
+define([   
 ], function (BaseModel,AppView) {
  
     'use strict';
     
     return function () {
-        var homeview = new AppView(new BaseModel());
+        
     };
  
 });
