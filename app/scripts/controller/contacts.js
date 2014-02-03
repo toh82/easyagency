@@ -16,11 +16,11 @@ define([
         contactsCollection.fetch();
 
         // NOTE === Build the new user form with modo
-        newuserView.collection = contactsCollection;
-        
+        newuserView.collection = contactsCollection;        
         modo.init($('#body'), newuserView.root);  
         
         // NOTE === Build contacts list 
+        console.log('bla',contactsCollection);
         var contactslistView = new ContactlistView({collection: contactsCollection});                      
     };
  

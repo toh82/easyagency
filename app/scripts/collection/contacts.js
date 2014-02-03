@@ -9,10 +9,7 @@ define([
         view:  "all", // NOTE this is the couch view parameter !!!
         model: ContactsModel,
         initialize: function(options){
-            this.on("add", function(user) {
-                console.log('user added:', user);
-                user.save();
-            });
+ 
         }
     });
     
