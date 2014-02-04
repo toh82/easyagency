@@ -28,13 +28,23 @@ define([
                     {
                         type: 'InputText',
                         key: 'firstname',
-                        placeholder: 'firstname' 
+                        params: {placeholder: 'firstname'} 
                     },                    
                     {
                         type: 'InputText',
                         key: 'name',
-                        placeholder: 'lastname' 
-                    }                    
+                        params: {placeholder: 'lastname' }
+                    },
+                    { 
+                        type: 'DropDown',
+                        key: 'salutation',
+                        params: {
+                            data: {
+                                0: 'Herr',
+                                1: 'Frau'    
+                            }
+                        }
+                    }                                         
                 ]
             },
             {
