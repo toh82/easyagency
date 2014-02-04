@@ -447,6 +447,8 @@
    * @param {function} options object containing success and error callbacks
    */
   Backbone.sync = function(method, obj, options) {
+      console.log(method,obj);
+      
     if ( method === "create" || method === "update" ) {
       // triggered on "model.save(...)"
       Backbone.couch.create( obj, options.success, options.error );

@@ -22,13 +22,19 @@ define([
             {
                 type: 'FormSlot',
                 params: {
-                    label: 'Username:'
+                    label: 'Username (first/last):'
                 },
-                children: [
+                children: [        
                     {
                         type: 'InputText',
-                        key: 'name' 
-                    }
+                        key: 'firstname',
+                        placeholder: 'firstname' 
+                    },                    
+                    {
+                        type: 'InputText',
+                        key: 'name',
+                        placeholder: 'lastname' 
+                    }                    
                 ]
             },
             {

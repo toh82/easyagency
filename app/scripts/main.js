@@ -9,9 +9,10 @@
             underscore: 'vendor/underscore-min',
             backbone: 'vendor/backbone-min',
             modo: 'vendor/modo-0.13-full',
-            uikit: 'vendor/uikit.min',
+            foundation: 'vendor/foundation.min',
             templates: '../templates',
-            database: 'vendor/database'
+            couchdb: 'vendor/backbone.couch',
+            couchjs: 'vendor/couch'
         },
         shim: {
             "underscore": {
@@ -26,25 +27,23 @@
                 deps: ["jquery","backbone"],
                 exports: "modo"
             },
-            "uikit": {
+            "foundation": {
                 deps: ["jquery"],
-                exports: "uikit"
-            },                       
-            "database": {
+                exports: "foundation"
+            },                                 
+            "couchdb": {
+                deps: ["backbone","couchjs"],
+                exports: "couchdb"            
+            },
+            "couchjs":{
                 deps: ["jquery"],
-                exports: "database"
-            }            
+                exports: "couchjs"            
+            }
         }
     });
 
-    require(['app','database'], function(app) {
-        app.initialize();
-
-        $.couch.info({
-            success: function(data) {
-                console.log(data);
-            }
-        });
+    require(['app','couchdb'], function(app) {        
+        app.initialize();        
     });
     
 }());    

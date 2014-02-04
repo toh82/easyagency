@@ -2,15 +2,18 @@ define([
     'jquery',
     'underscore',
     'backbone',
-    'router'
-], function ($, _, Backbone, router) {
+    'router',
+    "model/base",
+    "views/app"      
+], function ($, _, Backbone, router, BaseModel, AppView) {
  
     'use strict';
  
     console.log('Application started');
+    var homeview = new AppView(new BaseModel());
     
     router.route("/*", "home", function () {
-        this.loadModule("controller/foo");
+        //this.loadModule("controller/home");
     });
 
     router.route("contacts", "Contacts", function () {
@@ -21,7 +24,7 @@ define([
         this.loadModule("controller/notes");
     });
     
-    return {
+    return {       
         initialize: function () {
             Backbone.history.start();
         }

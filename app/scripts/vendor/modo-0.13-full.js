@@ -316,6 +316,13 @@
                 mobj.hide();
             }
 
+            //Disabled flag - works on some elements like buttons and will disable them upon creation.
+            if(o.disabled){
+                if(typeof mobj.disable === 'function'){
+                    mobj.disable();
+                }
+            }
+
             //Attach children to a container element.
             if(o.children instanceof Array && o.children.length){
                 if(typeof mobj.add !== 'function'){
@@ -659,7 +666,7 @@
             layout: params.layout || layouts[0]
         };
 
-        if (layouts.indexOf(settings.layout) === -1) {
+        if (_.indexOf(layouts, settings.layout) === -1) {
             settings.layout = layouts[0];
         }
 
@@ -957,14 +964,20 @@
         }
     }
 
-    modoCore.defineElement('InputText', ['inputtext', 'inputtext-'], function (params){
+    var placeholderFallback;
+    (function (){
+        var test = document.createElement('input');
+        placeholderFallback = !('placeholder' in test);
+    })();
+
+
+    modoCore.defineElement('InputText', ['inputtext', 'inputtext-', 'placeholded'], function (params){
         params = params || {};
 
         var settings,
             that,
             keymap,
             lazyFocus;
-
 
         settings = {
             type: params.type || 'text',
@@ -977,7 +990,7 @@
             boundModelKey: null
         };
 
-        modoCore.Element.call(this, _.extend(params, {el: $('<input type="' + settings.type + '">')}));
+        modoCore.Element.call(this, _.extend(params, {el: $(settings.type !== 'textarea' ? '<input type="' + settings.type + '">' : '<textarea></textarea>')}));
 
         this.addClass(modoCore.InputText.classNames[0]);
         this.addClass(modoCore.InputText.classNames[1] + settings.type);
@@ -1034,8 +1047,16 @@
             }, settings.changeThreshold);
 
         }).on('blur',function (){
+                if(placeholderFallback && settings.placeholder && !that.el.val()){
+                    that.el.val(settings.placeholder);
+                    that.addClass(modoCore.InputText.classNames[2]);
+                }
                 that.trigger('blur');
             }).on('focus',function (){
+                if(placeholderFallback && that.el.val() === settings.placeholder){
+                    that.el.val('');
+                    that.removeClass(modoCore.InputText.classNames[2]);
+                }
                 lazyFocus();
             }).on('click', function (){
                 lazyFocus();
@@ -1050,6 +1071,11 @@
             settings.lastValue = settings.value;
         }
 
+        if(placeholderFallback && !settings.value && settings.placeholder){
+            this.el.val(settings.placeholder);
+            this.addClass(modoCore.InputText.classNames[2]);
+        }
+
         this.set = function (value, options){
             var silent;
 
@@ -1058,6 +1084,12 @@
             silent = options.silent;
 
             settings.value = value;
+
+            if(!value && placeholderFallback && settings.placeholder){
+                value = settings.placeholder;
+                this.addClass(modoCore.InputText.classNames[2]);
+            }
+
             this.el.val(value);
             if(settings.value !== settings.lastValue){
                 settings.lastValue = value;
@@ -1356,7 +1388,7 @@
                 if(!d){
                     return;
                 }
-                if(typeof d === 'string'){
+                if(typeof d === 'string' || typeof d === 'number'){
                     return '<div>' + d + '</div>';
                 }
                 for (var key in d) {
@@ -1488,7 +1520,7 @@
                 }
                 index = key;
             } else {
-                index = ids.indexOf(key);
+                index = _.indexOf(ids, key);
                 if(index === -1){
                     throw new Error('Element key not in dataset');
                 }
@@ -1580,6 +1612,10 @@
                         index++;
                     });
 
+                    if(clickedIndex === -1){
+                        throw new Error('Weird. I could not find the matching element. Please report this!');
+                    }
+
                     if(settings.data instanceof Backbone.Collection){
                         index = ids[clickedIndex];
                         data = settings.data.get(ids[clickedIndex]);
@@ -1605,7 +1641,7 @@
             this.update();
         }
     })
-    .inheritPrototype('Element');
+        .inheritPrototype('Element');
 })();
 /**
  * Modo Toggle Button
@@ -2392,8 +2428,8 @@
         this.addClass(modoCore.FormContainer.classNames[0]);
 
         //Keep the original add/remove functions.
-        var pAdd = modoCore.FormContainer.prototype.add; //,
-        //pRemove = modoCore.FormContainer.prototype.remove;
+        var pAdd = modoCore.FormContainer.prototype.add,
+            pRemove = modoCore.FormContainer.prototype.remove;
 
         var that = this;
 
@@ -2452,6 +2488,7 @@
                 if(settings.autosave){
                     that.save();
                 }
+                that.trigger('change');
             }
         };
 
@@ -2506,6 +2543,7 @@
                             if(!modoCore.isGetSetElement(oo[key])){
                                 throw new Error('Only get/set enabled elements can be added with a data-key.');
                             }
+                            oo[key].parentFormSlot = o;
                             settings.elements[key] = oo[key];
                             this.listenTo(oo[key], 'change', listenFunc);
                         }
@@ -2554,9 +2592,43 @@
             return this;
         };
 
-        //TODO: Add the remove method?!
-        this.remove = function (key, element){
+        /**
+         * Removes a previously added element from the FormContainer.
+         * @param {string} key Key of the element to be removed. If its inside a FormSlot, set force to true.
+         * @param {bool} [force=false] If you try to remove an element inside a FormSlot, an error will be thrown. Pass true, to forcefully dump the whole FormSlot. Be careful, this might remove other elements as well!
+         * @returns {*}
+         */
+        this.remove = function (key, force){
+            if(settings.elements[key] === undefined){
+                throw new Error('No element with that key found');
+            }
 
+            if(settings.elements[key].parentFormSlot !== undefined){
+                if(!force){
+                    throw new Error('Element with that key is part of a FormSlot. Call remove() with force=true to dump the FormSlot along.');
+                }
+
+                pRemove.call(this, settings.elements[key].parentFormSlot);
+
+                _.each(settings.elements[key].parentFormSlot.getElements(), function (el, key){
+                    delete settings.elements[key];
+                });
+            }
+
+            pRemove.call(this, settings.elements[key]);
+            delete settings.elements[key];
+
+            return this;
+        };
+
+        /**
+         * Destroys all elements inside the FormContainer.
+         */
+        this.removeAll = function(){
+            delete settings.elements;
+            settings.elements = {};
+            this.el.html('');
+            return this;
         };
 
         /**
@@ -2615,6 +2687,13 @@
             });
 
             return this;
+        };
+
+        /**
+         * Convenience method to reset the form fields.
+         */
+        this.reset = function (){
+            return this.set();
         };
 
         /**
@@ -3215,7 +3294,7 @@
          * @param {String} position
          */
         this.attach = function (element, position){
-            if(possiblePositions.indexOf(position) === -1){
+            if(_.indexOf(possiblePositions, position) === -1){
                 throw new Error('Illegal position');
             }
 
@@ -3701,7 +3780,7 @@
         var settings = {
             data: params.data,
             buttonRender: params.buttonRender || function (d){
-                if(typeof d === 'string'){
+                if(typeof d === 'string' || typeof d === 'number'){
                     return d;
                 }
                 for (var key in d) {
@@ -3839,175 +3918,293 @@
     }
 
     modoCore.defineElement('Grid', ['grid', 'grid-header', 'grid-row', 'grid-cell', 'grid-column-'], function (params){
-        params = params || {};
+            params = params || {};
 
-        modoCore.Element.call(this, params);
+            modoCore.Element.call(this, params);
 
-        this.addClass(modoCore.Grid.classNames[0]);
+            this.addClass(modoCore.Grid.classNames[0]);
 
-        /*var params = {
-         columns: [
-         {
-         key: 'some_key',            //The key to use from the datasource.
-         title: 'The column header', //HTML possible
-         render: function(d){
-         return d.toString();    //HTML, or a Modo Element is expected. Will be wrapped into a additional DIV.
-         },
-         required: false             //Decide if this column can be user-selected or must be shown.
-         }
-         ],
-         */
-        /**
-         * The prepare function is called before each column render.
-         * You can make up own columns out of data which is generated dynamically upon table creation.
-         * @param d
-         * @return {*}
-         */
-        /*
-         prepare: function(d){
-         return d;
-         },
-         visibleColumns: ['key_a', 'key_b'], //Predefined column selection
-         rowTag: 'div',
-         cellTag: 'div'
-         };*/
+            /*var params = {
+             columns: [
+             {
+             key: 'some_key',            //The key to use from the datasource.
+             title: 'The column header', //HTML possible
+             render: function(d){
+             return d.toString();    //HTML, or a Modo Element is expected. Will be wrapped into a additional DIV.
+             },
+             required: false             //Decide if this column can be user-selected or must be shown.
+             }
+             ],
+             */
+            /**
+             * The prepare function is called before each column render.
+             * You can make up own columns out of data which is generated dynamically upon table creation.
+             * @param d
+             * @return {*}
+             */
+            /*
+             prepare: function(d){
+             return d;
+             },
+             visibleColumns: ['key_a', 'key_b'], //Predefined column selection
+             rowTag: 'div',
+             cellTag: 'div'
+             };*/
 
-        var settings = {
-            data: params.data,
-            collector: params.collector || function (c){
-                return c.filter(function (){
-                    return true;
-                });
-            },
-            updateOn: params.updateOn || ['add', 'change', 'remove', 'sort'],
-            columns: params.columns,
-            prepare: params.prepare || function (d){
-                return d;
-            },
-            visibleColumns: params.visibleColumns || null,
-            rowTag: params.rowTag || 'div',
-            cellTag: params.cellTag || 'div'
-        };
+            var settings,
+                that,
+                ids;
 
-        if(!(settings.data instanceof Backbone.Collection) && !(settings.data instanceof Array)){
-            throw new Error('Only data type Array or Backbone.Collection allowed. Yours is: ' + typeof settings.data);
-        }
-
-        _.each(settings.columns, function (c){
-            if(typeof c.render === 'undefined'){
-                c.render = function (d){
-                    return d.toString();
-                };
-                c.title = c.title || '';
-            }
-        });
-
-        /**
-         * Will trigger a re-render of the grid.
-         * @param options
-         */
-        this.update = function (options){
-            var html = '',
-                rowHtml = '',
-                rowData,
-                dataset,
-                columnPack = [],
-                ids = [],
-                silent,
-                i,
-                c,
-                result,
-                cellCount = 0,
-                $cells,
-                that = this,
-                modoElements = [],
-                cH = modoCore.cssPrefix + modoCore.Grid.classNames[1],
-                cR = modoCore.cssPrefix + modoCore.Grid.classNames[2],
-                cC = modoCore.cssPrefix + modoCore.Grid.classNames[3],
-                cClm = modoCore.cssPrefix + modoCore.Grid.classNames[4];
-
-            options = options || {};
-
-            silent = options.silent;
-
-            function makeRow(content, isHeader){
-                return '<' + settings.rowTag + ' class="' + cR + (isHeader ? ' ' + cH : '') + '">' + content + '</' + settings.rowTag + '>';
-            }
-
-            function makeCell(content, column){
-                cellCount++;
-                return '<' + settings.cellTag + ' class="' + cC + ' ' + cClm + column + '">' + content + '</' + settings.cellTag + '>';
-            }
-
-            if(settings.visibleColumns === null){
-                columnPack = settings.columns;
-            } else {
-                for (i = 0; i < settings.columns.length; i++) {
-                    if(settings.visibleColumns.indexOf(settings.columns[i].key) !== -1){
-                        columnPack.push(settings.columns[i]);
+            settings = {
+                data: null,
+                collector: params.collector || function (c){
+                    return c.filter(function (){
+                        return true;
+                    });
+                },
+                updateOn: params.updateOn || ['add', 'change', 'remove', 'sort'],
+                columns: params.columns,
+                prepare: params.prepare || function (d){
+                    if(d instanceof Backbone.Model){
+                        return d.toJSON();
                     }
-                }
-            }
+                    return d;
+                },
+                visibleColumns: params.visibleColumns || null,
+                rowTag: params.rowTag || 'div',
+                cellTag: params.cellTag || 'div'
+            };
 
-            _.each(columnPack, function (c){
-                rowHtml += makeCell(c.title, c.key);
-            });
-            html = makeRow(rowHtml, true);
+            that = this;
 
-            if(settings.data instanceof Backbone.Collection){
-                dataset = settings.collector(settings.data);
-            } else {
-                dataset = settings.data;
-            }
-            _.each(dataset, function (e){
-                var key;
+            //Prevent undefined values.
+            function prepareColumns(){
+                //Remove all previously attached event listeners.
+                that.el.off('.itemEvent', '**');
 
-                ids.push(e.id || e.cid);
-                rowHtml = '';
-                rowData = settings.prepare(e);
-                for (i = 0; i < columnPack.length; i++) {
-                    c = columnPack[i];
-                    if(typeof rowData[c.key] === 'undefined'){
-                        throw new Error('Undefined field "' + c.key + '" in row data.');
-                    }
-                    result = c.render(rowData[c.key]);
-                    if(modoCore.isElement(result)){
-                        c.isModo = true;
-                        modoElements.push([cellCount, result]);
-                        if(typeof c.events !== 'undefined'){
-                            for (key in c.events) {
-                                if(!c.events.hasOwnProperty(key)){
-                                    continue;
-                                }
-                                that.listenTo(result, key, function (e, v){
-                                    c.events[key].call(this, e, v, rowData);
-                                });
+                _.each(settings.columns, function (c){
+                        var chain,
+                            columnClassName;
+
+                        if(typeof c.render === 'undefined'){
+                            c.render = function (d){
+                                return d.toString();
+                            };
+                            c.title = c.title || '';
+                        }
+
+                        if(c.itemEvents){
+                            for (var evt in c.itemEvents) {
+                                chain = evt.split(' ');
+                                columnClassName = modoCore.cssPrefix + modoCore.Grid.classNames[4] + c.key;
+
+                                that.el.on(chain.shift() + '.itemEvent', '.' + columnClassName + ' ' + chain.join(' '), (function (columnData, evt){
+                                    return function (e){
+                                        var $this = $(this),
+                                            tableRowElement,
+                                            clickedIndex,
+                                            index = 0,
+                                            data,
+                                            cellData,
+                                            all;
+
+                                        tableRowElement = $this.parents('.' + modoCore.cssPrefix + modoCore.Grid.classNames[2]);
+                                        all = that.el.find('.' + modoCore.cssPrefix + modoCore.Grid.classNames[2]).not('.' + modoCore.cssPrefix + modoCore.Grid.classNames[1]);
+
+                                        //Loop through all created table rows to find ours.
+                                        clickedIndex = -1;
+                                        _.every(all, function (e){
+                                            if($(e).is(tableRowElement)){
+                                                clickedIndex = index;
+                                                return false;
+                                            }
+                                            index++;
+                                            return true;
+                                        });
+
+                                        if(clickedIndex === -1){
+                                            throw new Error('Weird. I could not find the matching row. Please report this!');
+                                        }
+
+                                        if(settings.data instanceof Backbone.Collection){
+                                            index = ids[clickedIndex];
+                                            data = settings.data.get(index);
+                                        } else {
+                                            if(settings.data instanceof Array){
+                                                index = clickedIndex;
+                                                data = settings.data[clickedIndex];
+                                            } else {
+                                                throw new Error('Not implemented.');
+                                            }
+                                        }
+
+                                        if(data instanceof Backbone.Model){
+                                            cellData = data.get(columnData.key);
+                                        } else {
+                                            cellData = data[columnData.key];
+                                        }
+
+                                        if(typeof columnData.itemEvents[evt] === 'function'){
+                                            columnData.itemEvents[evt].call(that, e, index, cellData, data, columnData.key);
+                                        } else {
+                                            that.trigger('item:' + columnData.itemEvents[evt], e, index, cellData, data, columnData.key);
+                                        }
+                                    };
+                                })(c, evt));
                             }
                         }
-                        result = '';
                     }
-                    rowHtml += makeCell(result, c.key);
+                )
+                ;
+            }
+
+            prepareColumns();
+
+            /**
+             * Set up new column data for the grid.
+             * @param columnData
+             */
+            this.setColumns = function (columnData){
+                settings.columns = columnData;
+                prepareColumns();
+                this.update();
+            };
+
+            this.set = function (data, options){
+                var that;
+
+                that = this;
+
+                if(!(data instanceof Backbone.Collection) && !(data instanceof Array)){
+                    throw new Error('Only data type Array or Backbone.Collection allowed. Yours is: ' + typeof settings.data);
                 }
-                html += makeRow(rowHtml);
-            });
 
-            this.el.html(html);
+                settings.data = data;
+                this.stopListening();
 
-            $cells = this.el.find('.' + modoCore.cssPrefix + modoCore.Grid.classNames[3]);
-            for (i = 0; i < modoElements.length; i++) {
-                $cells.eq(modoElements[i][0]).append(modoElements[i][1].el);
-            }
+                if(data instanceof Backbone.Collection){
+                    this.listenTo(data, settings.updateOn.join(' '), function (){
+                        that.update(options);
+                    });
+                }
 
-            if(!silent){
-                this.trigger('update');
-            }
+                this.update();
+            };
 
-            return this;
+            /**
+             * Will trigger a re-render of the grid.
+             * @param options
+             */
+            this.update = function (options){
+                var html = '',
+                    rowHtml = '',
+                    rowData,
+                    dataset,
+                    columnPack = [],
+                    silent,
+                    i,
+                    c,
+                    result,
+                    cellCount = 0,
+                    $cells,
+                    that = this,
+                    modoElements = [],
+                    cH = modoCore.cssPrefix + modoCore.Grid.classNames[1],
+                    cR = modoCore.cssPrefix + modoCore.Grid.classNames[2],
+                    cC = modoCore.cssPrefix + modoCore.Grid.classNames[3],
+                    cClm = modoCore.cssPrefix + modoCore.Grid.classNames[4];
+
+                options = options || {};
+
+                silent = options.silent;
+
+                ids = [];
+
+                function makeRow(content, isHeader){
+                    return '<' + settings.rowTag + ' class="' + cR + (isHeader ? ' ' + cH : '') + '">' + content + '</' + settings.rowTag + '>';
+                }
+
+                function makeCell(content, column){
+                    cellCount++;
+                    return '<' + settings.cellTag + ' class="' + cC + ' ' + cClm + column + '">' + content + '</' + settings.cellTag + '>';
+                }
+
+                if(settings.visibleColumns === null){
+                    columnPack = settings.columns;
+                } else {
+                    for (i = 0; i < settings.columns.length; i++) {
+                        if(_.indexOf(settings.visibleColumns, settings.columns[i].key) !== -1){
+                            columnPack.push(settings.columns[i]);
+                        }
+                    }
+                }
+
+                _.each(columnPack, function (c){
+                    rowHtml += makeCell(c.title, c.key);
+                });
+                html = makeRow(rowHtml, true);
+
+                if(settings.data instanceof Backbone.Collection){
+                    dataset = settings.collector(settings.data);
+                } else {
+                    dataset = settings.data;
+                }
+                _.each(dataset, function (e, index){
+                    var key;
+
+                    ids.push(e.id || e.cid || index);
+                    rowHtml = '';
+                    rowData = settings.prepare(e);
+                    for (i = 0; i < columnPack.length; i++) {
+                        c = columnPack[i];
+                        if(c.key !== null){
+                            if(typeof rowData[c.key] === 'undefined'){
+                                throw new Error('Undefined field "' + c.key + '" in row data.');
+                            }
+                            result = c.render(rowData[c.key]);
+                        } else {
+                            result = c.render();
+                        }
+                        if(modoCore.isElement(result)){
+                            c.isModo = true;
+                            modoElements.push([cellCount, result]);
+                            if(typeof c.events !== 'undefined'){
+                                for (key in c.events) {
+                                    if(!c.events.hasOwnProperty(key)){
+                                        continue;
+                                    }
+                                    that.listenTo(result, key, function (e, v){
+                                        c.events[key].call(this, e, v, rowData);
+                                    });
+                                }
+                            }
+                            result = '';
+                        }
+                        rowHtml += makeCell(result, c.key);
+                    }
+                    html += makeRow(rowHtml);
+                });
+
+                this.el.html(html);
+
+                $cells = this.el.find('.' + modoCore.cssPrefix + modoCore.Grid.classNames[3]);
+                for (i = 0; i < modoElements.length; i++) {
+                    $cells.eq(modoElements[i][0]).append(modoElements[i][1].el);
+                }
+
+                if(!silent){
+                    this.trigger('update');
+                }
+
+                return this;
+            };
+
+            this.set(params.data, {silent: true});
         }
 
-        this.update({silent: true});
-    })
-        .inheritPrototype('Element');
+    )
+        .
+        inheritPrototype('Element');
 
 
     if(typeof exports !== 'undefined'){
@@ -4057,10 +4254,15 @@
 
         if(!params.custom){
             this.$checkbox = $('<input type="checkbox">');
+            this.$checkbox[0].checked = params.value;
             this.$checkbox.on('click', function(e){
                 e.preventDefault();
                 e.stopPropagation();
                 that.set(!that.value);
+                //I hate to be doing this, but otherwise, the checkbox just won't behave -.-
+                setTimeout(function(){
+                    that.$checkbox[0].checked = that.value;
+                }, 0);
             });
         } else {
             this.$checkbox = $('<span class="' + cn(0) + '"></span>');
@@ -4108,7 +4310,9 @@
                 this.value = false;
             }
 
-            this.$checkbox.prop('checked', this.value);
+            if(!params.custom){
+                that.$checkbox[0].checked = this.value;
+            }
 
             this.el.toggleClass(cn(2), this.value);
 
@@ -4330,7 +4534,7 @@
                     throw new Error('No element key given');
                 }
 
-                if(keys.indexOf(o.key) !== -1){
+                if(_.indexOf(keys, o.key) !== -1){
                     throw new Error('Duplicate key: ' + o.key);
                 }
                 keys.push(o.key);
@@ -4368,7 +4572,7 @@
          * @return {*|jQuery|HTMLElement}
          */
         this.getElementByKey = function (key){
-            if(keys.indexOf(key) === -1){
+            if(_.indexOf(keys, key) === -1){
                 throw new Error('Unknown key');
             }
             return $('.' + modoCore.cssPrefix + modoCore.Toolbar.classNames[3] + '-' + key, this.el);
@@ -5331,7 +5535,7 @@
         releaseScope: function (oldScope){
             var scopeIndex;
 
-            scopeIndex = scopes.indexOf(oldScope.modoId || oldScope);
+            scopeIndex = _.indexOf(scopes, oldScope.modoId || oldScope);
 
             if(scopeIndex !== -1){
                 scopes.splice(scopeIndex, 1);

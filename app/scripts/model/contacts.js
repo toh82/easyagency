@@ -1,7 +1,6 @@
 define([
   'underscore',
-  'backbone',
-  'database'
+  'backbone'
 ], function(_, Backbone) {
     var ContactsModel = Backbone.Model.extend({
         url : '',
@@ -10,8 +9,8 @@ define([
             address: "NA",
             mail: "NA"
         },  
-        initialize: function( options ) {},
-        sync: function(method, model) {
+        initialize: function( options ) {}
+        /*sync: function(method, model) {
             if(method == 'create'){
                 var doc = model.attributes;
                 console.log('save a new user', doc);
@@ -27,7 +26,7 @@ define([
 
             }
             return;
-        }
+        }*/
     });
     
     return ContactsModel;

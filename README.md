@@ -13,3 +13,9 @@ http://bradley-holt.com/2011/07/couchdb-jquery-plugin-reference/
 
 Die jquery.couch.js liegt jeder couchDB Installation bei:
 /_utils/script/jquery.couch.js
+
+Über CouchDB Views:
+http://guide.couchdb.org/draft/views.html
+
+Dokumentation zur backbone couch:
+http://janmonschke.com/backbone-couchdb/backbone-couchdb.html
